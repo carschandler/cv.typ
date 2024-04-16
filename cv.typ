@@ -64,7 +64,7 @@
 #let addresstext(info, uservars) = {
     if uservars.showAddress {
         block(width: 100%)[
-            #info.personal.location.city, #info.personal.location.region, #info.personal.location.country #info.personal.location.postalCode
+            #info.personal.location.city, #info.personal.location.region
             #v(-4pt)
         ]
     } else {none}
@@ -298,17 +298,17 @@
 #let cvskills(info, isbreakable: true) = {
     if (info.languages != none) or (info.skills != none) or (info.interests != none) {block(breakable: isbreakable)[
         == Skills, Languages, Interests
+        #if (info.skills != none) [
+            #for group in info.skills [
+                - *#group.category*: #group.skills.join(", ")
+            ]
+        ]
         #if (info.languages != none) [
             #let langs = ()
             #for lang in info.languages {
                 langs.push([#lang.language (#lang.fluency)])
             }
             - *Languages*: #langs.join(", ")
-        ]
-        #if (info.skills != none) [
-            #for group in info.skills [
-                - *#group.category*: #group.skills.join(", ")
-            ]
         ]
         #if (info.interests != none) [
             - *Interests*: #info.interests.join(", ")
