@@ -211,8 +211,8 @@
         == Projects
         #for project in info.projects {
             // parse ISO date strings into datetime objects
-            let start = utils.strpdate(project.startDate)
-            let end = utils.strpdate(project.endDate)
+            // let start = utils.strpdate(project.startDate)
+            // let end = utils.strpdate(project.endDate)
             // create a block layout for each project entry
             block(width: 100%, breakable: isbreakable)[
                 // line 1: project name
@@ -222,7 +222,7 @@
                     *#project.name* \
                 ]
                 // line 2: organization and date
-                #text(style: "italic")[#project.affiliation]  #h(1fr) #start #sym.dash.en #end \
+                #text(style: "italic")[#project.affiliation] \ //  #h(1fr) #start #sym.dash.en #end \ // remove date for projects
                 // summary or description
                 #for hi in project.highlights [
                     - #eval(hi, mode: "markup")
