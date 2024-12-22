@@ -55,7 +55,6 @@
           "required": [
             "city",
             "region",
-            "postalCode",
             "country"
           ],
           "properties": {
@@ -361,7 +360,7 @@
             "default": ""
           },
           "url": {
-            "type": "string",
+            "type": ["string", "null"],
             "format": "uri",
             "default": ""
           }
@@ -418,8 +417,6 @@
           "name",
           "url",
           "affiliation",
-          "startDate",
-          "endDate",
           "highlights"
         ],
         "properties": {

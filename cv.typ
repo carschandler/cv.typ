@@ -27,7 +27,7 @@
         level: 2,
     ): it => block(width: 100%)[
         #set align(left)
-        #set text(font: uservars.headingfont, size: 1em, weight: "bold")
+        #set text(font: uservars.headingfont, size: 1em, weight: "regular")
         #if (uservars.at("headingsmallcaps", default:false)) {
             smallcaps(it.body)
         } else {
@@ -40,7 +40,7 @@
     show heading.where(
         level: 1,
     ): it => block(width: 100%)[
-        #set text(font: uservars.headingfont, size: 1.5em, weight: "bold")
+        #set text(font: uservars.headingfont, size: 1.1em, weight: "regular")
         #if (uservars.at("headingsmallcaps", default:false)) {
             smallcaps(it.body)
         } else {
@@ -48,6 +48,10 @@
         }
         #v(2pt)
     ]
+
+    show heading.where(
+        level: 3,
+    ): it => set text(font: uservars.headingfont, weight: 500)
 
     doc
 }
@@ -89,7 +93,7 @@
 
     #set text(font: uservars.bodyfont, weight: "medium", size: uservars.fontsize * 1)
     #pad(x: 0em)[
-        #profiles.join([#sym.space.en #sym.diamond.filled #sym.space.en])
+        #profiles.join([#sym.space.en #sym.bullet #sym.space.en])
     ]
 ]
 
@@ -108,9 +112,9 @@
             block(width: 100%, breakable: isbreakable)[
                 // line 1: company and location
                 #if w.url != none [
-                    *#link(w.url)[#w.organization]* #h(1fr) *#w.location* \
+                    #link(w.url)[#w.organization] #h(1fr) #w.location \
                 ] else [
-                    *#w.organization* #h(1fr) *#w.location* \
+                    #w.organization #h(1fr) #w.location \
                 ]
             ]
             // create a block layout for each work entry
@@ -143,9 +147,9 @@
             let end = utils.strpdate(edu.endDate)
 
             let edu-items = ""
-            if edu.gpa != none {edu-items = edu-items + "- *GPA*: " + edu.gpa + "\n"}
-            if edu.honors != none {edu-items = edu-items + "- *Honors*: " + edu.honors.join(", ") + "\n"}
-            if edu.courses != none {edu-items = edu-items + "- *Courses*: " + edu.courses.join(", ") + "\n"}
+            if edu.gpa != none {edu-items = edu-items + "- GPA: " + edu.gpa + "\n"}
+            if edu.honors != none {edu-items = edu-items + "- Honors: " + edu.honors.join(", ") + "\n"}
+            if edu.courses != none {edu-items = edu-items + "- Courses: " + edu.courses.join(", ") + "\n"}
             if edu.highlights != none {
                 for hi in edu.highlights {
                     edu-items = edu-items + "- " + hi + "\n"
@@ -157,9 +161,9 @@
             block(width: 100%, breakable: isbreakable)[
                 // line 1: institution and location
                 #if edu.url != none [
-                    *#link(edu.url)[#edu.institution]* #h(1fr) *#edu.location* \
+                    #link(edu.url)[#edu.institution] #h(1fr) #edu.location \
                 ] else [
-                    *#edu.institution* #h(1fr) *#edu.location* \
+                    #edu.institution #h(1fr) #edu.location \
                 ]
                 // line 2: degree and date
                 #text(style: "italic")[
@@ -217,9 +221,9 @@
             block(width: 100%, breakable: isbreakable)[
                 // line 1: project name
                 #if project.url != none [
-                    *#link(project.url)[#project.name]* \
+                    #link(project.url)[#eval(project.name, mode: "markup")] \
                 ] else [
-                    *#project.name* \
+                    #project.name \
                 ]
                 // line 2: organization and date
                 #text(style: "italic")[#project.affiliation] \ //  #h(1fr) #start #sym.dash.en #end \ // remove date for projects
@@ -270,9 +274,9 @@
             block(width: 100%, breakable: isbreakable)[
                 // line 1: certificate name
                 #if cert.url != none [
-                    *#link(cert.url)[#cert.name]* \
+                    #link(cert.url)[#cert.name] \
                 ] else [
-                    *#cert.name* \
+                    #cert.name \
                 ]
                 // line 2: issuer and date
                 Issued by #text(style: "italic")[#cert.issuer]  #h(1fr) #date \
@@ -307,7 +311,7 @@
         == Skills, Languages, Interests
         #if (info.skills != none) [
             #for group in info.skills [
-                - *#group.category*: #group.skills.join(", ")
+                - #group.category: #group.skills.join(", ")
             ]
         ]
         #if (info.languages != none) [
@@ -315,10 +319,10 @@
             #for lang in info.languages {
                 langs.push([#lang.language (#lang.fluency)])
             }
-            - *Languages*: #langs.join(", ")
+            - Languages: #langs.join(", ")
         ]
         #if (info.interests != none) [
-            - *Interests*: #info.interests.join(", ")
+            - Interests: #info.interests.join(", ")
         ]
     ]}
 }
