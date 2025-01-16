@@ -308,10 +308,10 @@
 
 #let cvskills(info, isbreakable: true) = {
     if (info.languages != none) or (info.skills != none) or (info.interests != none) {block(breakable: isbreakable)[
-        == Skills, Languages, Interests
+        == Skills, Languages, & Interests
         #if (info.skills != none) [
             #for group in info.skills [
-                - #group.category: #group.skills.join(", ")
+                - #eval(group.category, mode: "markup"): #eval(group.skills.join(", "), mode: "markup")
             ]
         ]
         #if (info.languages != none) [
