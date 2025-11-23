@@ -147,7 +147,7 @@
             let end = utils.strpdate(edu.endDate)
 
             let edu-items = ""
-            if edu.gpa != none {edu-items = edu-items + "- GPA: " + edu.gpa + "\n"}
+            if "gpa" in edu and edu.gpa != none {edu-items = edu-items + "- GPA: " + edu.gpa + "\n"}
             if edu.honors != none {edu-items = edu-items + "- Honors: " + edu.honors.join(", ") + "\n"}
             if edu.courses != none {edu-items = edu-items + "- Courses: " + edu.courses.join(", ") + "\n"}
             if edu.highlights != none {
@@ -167,11 +167,13 @@
                 ]
                 // line 2: degree and date
                 #text(style: "italic")[
-                    #if edu.minor != none [
-                        #edu.studyType in #edu.area, Minor in #edu.minor
-                    ] else [
-                        #edu.studyType in #edu.area
-                    ]
+                    #edu.studyType in #edu.area#{
+                        if "minor" in edu and edu.minor != none {
+                           ", Minor in " + edu.minor
+                        } else if "concentration" in edu and edu.concentration != none {
+                           ", Concentration in " + edu.concentration
+                        }
+                    }
                 ] #h(1fr)
                 #start #sym.dash.en #end \
                 #eval(edu-items, mode: "markup")
